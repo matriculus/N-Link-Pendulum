@@ -96,7 +96,15 @@ end
 %% Figures
 axx = sum(len);
 filename = 'animation.gif';
+video_name = 'myVideo.avi';
+
 delete(filename);
+delete(video_name);
+
+writerObj = VideoWriter(video_name);
+writerObj.FrameRate = 50;
+open(writerObj);
+
 h = figure;
 for i=1:tn
     clf;
@@ -114,6 +122,7 @@ for i=1:tn
     title(ttl);
     drawnow;
     frame = getframe(h);
+    video_frames(i) = frame;
     im = frame2im(frame);
     [imind,cm] = rgb2ind(im,256);
     % Write to the GIF File
@@ -122,7 +131,10 @@ for i=1:tn
     else
         imwrite(imind,cm,filename,'gif','WriteMode','append','DelayTime',0.0001);
     end
+    % write to video
+    writeVideo(writerObj, frame);
 end
+close(writerObj);
 close;
 
 figure;
