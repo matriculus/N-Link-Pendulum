@@ -14,7 +14,7 @@ Y axis
 
 syms t g real;
 
-n_links = 5;
+n_links = 10;
 
 m = sym('m',[n_links,1],{'real','positive'}); % vector of mass of each link
 l = sym('l',[n_links,1],{'real','positive'}); % vector of length of each links
@@ -110,12 +110,10 @@ open(writerObj);
 h = figure;
 for i=1:tn
     clf;
-    for j=1:n_links
-        lx = X(i,[j,j+1]);
-        ly = Y(i,[j,j+1]);
-        plot(lx,ly,'bo-','LineWidth',3); hold on;
-    end
-    plot(X(1:i,j+1),Y(1:i,j+1),'r');
+    lx = X(i,:);
+    ly = Y(i,:);
+    plot(lx,ly,'bo-','LineWidth',3); hold on;
+    plot(X(1:i,end),Y(1:i,end),'r');
     hold off;
     axis([-axx,axx,-axx,axx]);
     xlabel('X (m)');
